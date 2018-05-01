@@ -51,8 +51,7 @@ public class AddContacts extends AppCompatActivity {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(AddContacts.this, new DatePickerDialog.OnDateSetListener(){
 
                     @Override
-                    public void onDateSet(Date
-                                                  Picker view, int year, int month, int dayOfMonth) {
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         month = month +1;
                         textView.setText(dayOfMonth + "/" + month + "/" + year);
                     }
