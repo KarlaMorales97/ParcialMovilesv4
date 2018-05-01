@@ -64,13 +64,13 @@ public class MainActivity extends AppCompatActivity implements ContactosFragment
             case REQUEST_CODE_ASK_PERMISSION:
                 if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
 
-                    Toast t= Toast.makeText(getApplicationContext(),"Permiso autorizado",Toast.LENGTH_SHORT);
-                    t.show();
+                    Toast toast= Toast.makeText(getApplicationContext(),"Exito",Toast.LENGTH_SHORT);
+                    toast.show();
                 }
                 else{
 
-                    Toast t2 =Toast.makeText(getApplicationContext(),"Permiso denegado",Toast.LENGTH_SHORT);
-                    t2.show();
+                    Toast toast2 =Toast.makeText(getApplicationContext(),"Algo anda mal",Toast.LENGTH_SHORT);
+                    toast2.show();
                 }
                 break;
 
