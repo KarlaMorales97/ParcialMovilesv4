@@ -3,6 +3,7 @@ package com.morales.parcialmovilesv4;
 import android.Manifest;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
@@ -116,8 +117,11 @@ public class MainActivity extends AppCompatActivity implements ContactosFragment
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                //NEW ACTIVITY
+                    Intent i = new Intent(MainActivity.this, AddContacts.class);
+                    startActivity(i);
+
+
             }
         });
 
