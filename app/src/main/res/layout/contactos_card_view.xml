@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    card_view:cardUseCompatPadding="true"
+    card_view:cardBackgroundColor="#eff0f0"
+    android:elevation="7dp"
+    card_view:cardCornerRadius="4dp">
+
+
+        <ImageView
+            android:id="@+id/img"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:scaleType="centerCrop"
+            android:layout_height="wrap_content"
+            android:src="@drawable/user"/>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#eff0f0"
+            android:layout_weight="2"
+            android:layout_marginTop="130dp">
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_weight="2"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:text="@string/user"
+                android:textColor="#38657d"
+                android:textStyle="bold"
+                android:textSize="@dimen/activity_vertical_margin"
+                android:textColorHighlight="@color/colorPrimaryDark"/>
+
+
+        </LinearLayout>
+
+</android.support.v7.widget.CardView>
