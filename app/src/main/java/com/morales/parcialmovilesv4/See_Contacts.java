@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class See_Contacts extends AppCompatActivity {
-    private static final String TAG = "GalleryActivity";
+    private static final String TAG = "NewContact";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
