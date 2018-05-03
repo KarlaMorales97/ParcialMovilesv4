@@ -1,23 +1,39 @@
 package com.morales.parcialmovilesv4;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Created by Karla on 29/04/2018.
  */
 
 public class InformacionAdapter extends RecyclerView.Adapter<InformacionAdapter.InformacionViewHolder>{
+
+    private AdapterView.OnItemClickListener mListener;
+
+    public interface onItemClickListener{
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(AdapterView.OnItemClickListener listener){
+        mListener = listener;
+    }
 
     private Context contexto;
     private LayoutInflater inflater;
@@ -34,7 +50,7 @@ public class InformacionAdapter extends RecyclerView.Adapter<InformacionAdapter.
     public InformacionViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         inflater = LayoutInflater.from(contexto);
         View view = inflater.inflate(R.layout.contactos_card_view,parent,false);
-        InformacionViewHolder informacionViewHolder = new InformacionViewHolder(view);
+        InformacionViewHolder informacionViewHolder = new InformacionViewHolder(view, mListener);
         return informacionViewHolder;
     }
 
@@ -42,6 +58,19 @@ public class InformacionAdapter extends RecyclerView.Adapter<InformacionAdapter.
     public void onBindViewHolder(final InformacionViewHolder holder, final int position) {
         holder.name.setText(informacion.get(position).getNombre());
         holder.img.setImageResource(informacion.get(position).getImg());
+
+
+        holder.card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(contexto, See_Contacts.class);
+                contexto.startActivity(intent);
+            }
+        });
+
+        //NEW ACTIVITY SEE CONTACTS
+        /*Intent i = new Intent(this.contexto, AddContacts.class);
+        this.contexto.startActivity(i); */
 
 
        /* holder.buttonVer.setOnClickListener(new View.OnClickListener() {
@@ -64,12 +93,13 @@ public class InformacionAdapter extends RecyclerView.Adapter<InformacionAdapter.
         ImageView img;
         Button buttonVer;
 
-        public InformacionViewHolder(View itemView){
+        public InformacionViewHolder(View itemView, final AdapterView.OnItemClickListener listener){
             super(itemView);
             card = itemView.findViewById(R.id.card_view);
             name = itemView.findViewById(R.id.name);
             img = itemView.findViewById(R.id.img);
 //            buttonVer = itemView.findViewById(R.id.ButtonVer);
+
 
         }
     }

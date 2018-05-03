@@ -2,6 +2,7 @@ package com.morales.parcialmovilesv4;
 
 import android.content.ContentProvider;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
@@ -16,6 +17,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -76,9 +78,8 @@ public class ContactosFragment extends Fragment{
         GridLayoutManager gManager = new GridLayoutManager(getContext(),3);
         RecyclerView.LayoutManager lManager = gManager;
         rv.setLayoutManager(lManager);
-        InformacionAdapter adapter = new InformacionAdapter(getContext(),ObtenerDatos());
+        final InformacionAdapter adapter = new InformacionAdapter(getContext(),ObtenerDatos());
         rv.setAdapter(adapter);
-
 
             return vista;
     }
@@ -91,7 +92,7 @@ public class ContactosFragment extends Fragment{
     ArrayList<Informacion> informacion;
     //LinearLayoutManager lManager;
 
-
+//OBTENER DATOS DEL CONTACTO
     @RequiresApi(api = Build.VERSION_CODES.M)
     private List<Informacion> ObtenerDatos(){
         List<Informacion> list = new ArrayList<>();
@@ -105,7 +106,7 @@ public class ContactosFragment extends Fragment{
         return list;
 
     }
-
+//FINALIZANDO
 
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
