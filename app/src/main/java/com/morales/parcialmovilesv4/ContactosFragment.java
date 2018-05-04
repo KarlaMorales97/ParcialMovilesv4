@@ -81,6 +81,8 @@ public class ContactosFragment extends Fragment{
         final InformacionAdapter adapter = new InformacionAdapter(getContext(),ObtenerDatos());
         rv.setAdapter(adapter);
 
+
+
             return vista;
     }
 
@@ -96,11 +98,17 @@ public class ContactosFragment extends Fragment{
     @RequiresApi(api = Build.VERSION_CODES.M)
     private List<Informacion> ObtenerDatos(){
         List<Informacion> list = new ArrayList<>();
-        Cursor cursor= getContext().getContentResolver().query(ContactsContract.Contacts.CONTENT_URI, null,null
-                ,null,ContactsContract.Contacts.DISPLAY_NAME+" ASC");
+
+        String selectionClause = ContactsContract.Data.MIMETYPE + "='" +
+                ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE + "' AND "
+                + ContactsContract.CommonDataKinds.Phone.NUMBER + " IS NOT NULL";
+        String sortOrder = ContactsContract.Data.DISPLAY_NAME + " ASC";
+
+        Cursor cursor= getContext().getContentResolver().query(
+                ContactsContract.Data.CONTENT_URI, null, selectionClause, null, sortOrder);
         cursor.moveToFirst();
         while(cursor.moveToNext()){
-            list.add(new Informacion(cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))));
+            list.add(new Informacion(cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)), cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))));
         }
 
         return list;

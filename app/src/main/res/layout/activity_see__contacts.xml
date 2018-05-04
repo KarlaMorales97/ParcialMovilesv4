@@ -45,6 +45,7 @@
         android:textColor="#38657d"
         android:textStyle="bold"
         android:textColorHighlight="@color/colorPrimaryDark" />
+
     <TextView
         android:layout_marginTop="30dp"
         android:id="@+id/address_contact"

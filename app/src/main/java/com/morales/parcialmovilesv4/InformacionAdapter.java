@@ -1,7 +1,14 @@
 package com.morales.parcialmovilesv4;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.os.Build;
+import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,6 +24,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.app.PendingIntent.getActivity;
 import static android.content.ContentValues.TAG;
 
 /**
@@ -54,32 +62,48 @@ public class InformacionAdapter extends RecyclerView.Adapter<InformacionAdapter.
         return informacionViewHolder;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     public void onBindViewHolder(final InformacionViewHolder holder, final int position) {
-        holder.name.setText(informacion.get(position).getNombre());
-        holder.img.setImageResource(informacion.get(position).getImg());
+
+        if (contexto.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+
+            holder.name.setText(informacion.get(position).getNombre());
+            holder.img.setImageResource(informacion.get(position).getImg());
+            final Bundle bundle = new Bundle();
+            bundle.putSerializable("KEY", informacion.get(position));
+
+            holder.card.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(contexto, See_Contacts.class);
+                    intent.putExtras(bundle);
+                    contexto.startActivity(intent);
+                }
+            });
+        }
+        else if(contexto.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
 
 
-        holder.card.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(contexto, See_Contacts.class);
-                contexto.startActivity(intent);
-            }
-        });
+            FragmentViewer frag = new FragmentViewer();
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("KEY",informacion.get(position));
+            frag.setArguments(bundle);
 
-        //NEW ACTIVITY SEE CONTACTS
-        /*Intent i = new Intent(this.contexto, AddContacts.class);
-        this.contexto.startActivity(i); */
+            FragmentManager fragmentManager = frag.getChildFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+            fragmentTransaction.replace(R.id.viewer, frag);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
 
 
-       /* holder.buttonVer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Pelicula: "+ series.get(position).getName() + " #Pelis: " + series.get(position).getCaps() + " Descripcion: " + series.get(position).getDesc(), Toast.LENGTH_LONG).show();
-            }
-        });*/
+        }
+
     }
+
+
+
 
     @Override
     public int getItemCount() {

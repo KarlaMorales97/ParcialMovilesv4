@@ -21,8 +21,9 @@ public class Informacion implements Serializable{
         this.img = img;
     }
 
-    public Informacion(String nombre) {
+    public Informacion(String nombre, String numero) {
         this.nombre = nombre;
+        this.numero = numero;
     }
 
     public String getID() {

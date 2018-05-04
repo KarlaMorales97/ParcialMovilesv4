@@ -1,46 +1,44 @@
 package com.morales.parcialmovilesv4;
 
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import android.app.Fragment;
+import android.content.Intent;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.ImageView;
+import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class See_Contacts extends AppCompatActivity {
-    private static final String TAG = "NewContact";
+
+    TextView name, number;
+
+    Bundle bundle;
+    Intent intent;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_see__contacts);
-        Log.d(TAG, "onCreate: started.");
 
-        getIncomingIntent();
-    }
+        name = findViewById(R.id.name_contact);
+        number = findViewById(R.id.number_contact);
 
-    private void getIncomingIntent(){
-        Log.d(TAG, "getIncomingIntent: checking for incoming intents.");
-
-        if(getIntent().hasExtra("image_url") && getIntent().hasExtra("image_name")){
-            Log.d(TAG, "getIncomingIntent: found intent extras.");
-
-            String imageUrl = getIntent().getStringExtra("image_url");
-            String imageName = getIntent().getStringExtra("image_name");
-
-            setImage(imageUrl, imageName);
-        }
-    }
+        Intent callingIntent = this.getIntent();
+        bundle = callingIntent.getExtras();
 
 
-    private void setImage(String imageUrl, String imageName){
-        Log.d(TAG, "setImage: setting te image and name to widgets.");
+        Informacion informacion = (Informacion) bundle.getSerializable("KEY");
 
-        TextView name = findViewById(R.id.name_contact);
-        name.setText(imageName);
 
-        ImageView image = findViewById(R.id.image_see_contact);
+        name.setText(informacion.getNombre());
+        number.setText(informacion.getNumero());
 
+        String intentAction = callingIntent.getAction();
+        String intentType = callingIntent.getType();
     }
 
 }
