@@ -4,7 +4,12 @@ import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -12,6 +17,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -20,6 +26,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -133,16 +140,16 @@ public class AddContacts extends AppCompatActivity {
 
 
     private void showOptions() {
-        final CharSequence[] option = {"Elegir de galeria", "Cancelar"};
+        final CharSequence[] option = {"Choose from gallery", "Exit"};
         final AlertDialog.Builder builder = new AlertDialog.Builder(AddContacts.this);
-        builder.setTitle("Elige una opción");
+        builder.setTitle("Choose an option");
         builder.setItems(option, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-            /*    if(option[which] == "Tomar foto"){
+             /*   if(option[which] == "Take a picture"){
                     openCamera();
-                }else */
-            if(option[which] == "Elegir de galeria"){
+                }else*/
+            if(option[which] == "Choose from gallery"){
                     Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     intent.setType("image/*");
                     startActivityForResult(intent.createChooser(intent, "Selecciona app de imagen"), SELECT_PICTURE);
@@ -155,7 +162,7 @@ public class AddContacts extends AppCompatActivity {
         builder.show();
     }
 
-   /* private void openCamera() {
+   private void openCamera() {
         //ALMACENAR EN MEMORIA EXTERNA
         File file = new File(Environment.getExternalStorageDirectory(), MEDIA_DIRECTORY);
         boolean isDirectoryCreated = file.exists();
@@ -176,7 +183,7 @@ public class AddContacts extends AppCompatActivity {
             intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(newFile));
             startActivityForResult(intent, PHOTO_CODE);
         }
-    } */
+    }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -197,7 +204,7 @@ public class AddContacts extends AppCompatActivity {
 
         if(resultCode == RESULT_OK){
             switch (requestCode){
-               /* case PHOTO_CODE:
+               case PHOTO_CODE:
                     MediaScannerConnection.scanFile(this,
                             new String[]{mPath}, null,
                             new MediaScannerConnection.OnScanCompletedListener() {
@@ -207,11 +214,11 @@ public class AddContacts extends AppCompatActivity {
                                     Log.i("ExternalStorage", "-> Uri = " + uri);
                                 }
                             });
-                    Bitmap bitmap = BitmapFactory.decodeFile(mPath);
-                    mSetImage.setImageBitmap(bitmap);
+                   Uri path2 = data.getData();
+                   mSetImage.setImageURI(path2);
 
 
-                    break; */
+                    break;
                 case SELECT_PICTURE:
                     Uri path = data.getData();
                     mSetImage.setImageURI(path);
@@ -249,7 +256,7 @@ public class AddContacts extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
