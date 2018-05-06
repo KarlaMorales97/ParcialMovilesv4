@@ -1,8 +1,8 @@
 package com.morales.parcialmovilesv4;
 
-import android.content.ContentProvider;
+
+
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
@@ -12,12 +12,10 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -42,6 +40,10 @@ public class ContactosFragment extends Fragment{
     private String mParam1;
     private String mParam2;
     private ListView saveListView;
+    ArrayList<Informacion> datos;
+    ArrayList<Informacion> list;
+
+
 
     private List<Informacion> LiftSaves = new ArrayList<Informacion>();
 
@@ -75,10 +77,37 @@ public class ContactosFragment extends Fragment{
         vista = inflater.inflate(R.layout.recycler, container, false);
 
         rv =  vista.findViewById(R.id.recycler);
+        datos= new ArrayList<>();
+        list = new ArrayList<>();
+
         GridLayoutManager gManager = new GridLayoutManager(getContext(),3);
         RecyclerView.LayoutManager lManager = gManager;
         rv.setLayoutManager(lManager);
-        final InformacionAdapter adapter = new InformacionAdapter(getContext(),ObtenerDatos());
+
+
+        final InformacionAdapter adapter = new InformacionAdapter(getContext(), ObtenerDatos()) {
+            @Override
+            public void onVerClick(View v, int pos) {
+
+                 favoritos frag = new favoritos();
+
+                 Bundle bundle = new Bundle();
+                 list.add(ObtenerDatos().get(pos));
+                 bundle.putSerializable("KEY", list);
+
+                 frag.setArguments(bundle);
+                 final FragmentTransaction ft = getFragmentManager().beginTransaction();
+                 ft.replace(R.id.frameFav, frag);
+                 ft.commit();
+
+            }
+
+            @Override
+            public void numFavs(int favs) {
+
+            }
+        };
+
         rv.setAdapter(adapter);
 
 
@@ -96,7 +125,7 @@ public class ContactosFragment extends Fragment{
 
 //OBTENER DATOS DEL CONTACTO
     @RequiresApi(api = Build.VERSION_CODES.M)
-    private List<Informacion> ObtenerDatos(){
+    List<Informacion> ObtenerDatos(){
         List<Informacion> list = new ArrayList<>();
 
         String selectionClause = ContactsContract.Data.MIMETYPE + "='" +

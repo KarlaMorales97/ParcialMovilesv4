@@ -1,6 +1,7 @@
 package com.morales.parcialmovilesv4;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -33,14 +34,12 @@ public class FragmentViewer extends Fragment{
 
         if(bundle != null){
             Informacion informacion = (Informacion) bundle.getSerializable("KEY");
-
-
-
             name.setText(informacion.getNombre());
             number.setText(informacion.getNumero());
         }
 
         return view;
     }
+
 
 }

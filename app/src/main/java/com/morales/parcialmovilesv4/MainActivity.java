@@ -13,7 +13,10 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
@@ -28,13 +31,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.CheckBox;
 import android.widget.GridLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements ContactosFragment.OnFragmentInteractionListener{
+import java.util.ArrayList;
 
+public class MainActivity extends AppCompatActivity implements ContactosFragment.OnFragmentInteractionListener {
 
 
     /**
@@ -49,38 +54,46 @@ public class MainActivity extends AppCompatActivity implements ContactosFragment
 
     static final int REQUEST_CODE_ASK_PERMISSION = 2018;
     int Read;
+  /*  CheckBox favorito;
+    TextView left, middle, right;
+    ArrayList<Informacion> list;
+    ArrayList<Informacion> infs;
+    RecyclerView rv;
+    LinearLayoutManager lManager;
+    InformacionAdapter adapter;
+    ContactosFragment informationcontact; */
+
+    CheckBox favorito;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    public void accessPermission(){
+    public void accessPermission() {
         Read = ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS);
 
-        if(Read != PackageManager.PERMISSION_GRANTED){
-            requestPermissions(new String[]{Manifest.permission.READ_CONTACTS},REQUEST_CODE_ASK_PERMISSION);
+        if (Read != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.READ_CONTACTS}, REQUEST_CODE_ASK_PERMISSION);
         }
 
     }
+
     @Override
-    public void onRequestPermissionsResult(int requestCode,String[] permissions, int[ ] grantResults){
-        switch(requestCode){
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
             case REQUEST_CODE_ASK_PERMISSION:
-                if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-                    Toast toast= Toast.makeText(getApplicationContext(),"Exito",Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(getApplicationContext(), "Exito", Toast.LENGTH_SHORT);
                     toast.show();
-                }
-                else{
+                } else {
 
-                    Toast toast2 =Toast.makeText(getApplicationContext(),"Algo anda mal",Toast.LENGTH_SHORT);
+                    Toast toast2 = Toast.makeText(getApplicationContext(), "Algo anda mal", Toast.LENGTH_SHORT);
                     toast2.show();
                 }
                 break;
 
             default:
-                super.onRequestPermissionsResult(requestCode,permissions,grantResults);
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
-
-
 
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
@@ -97,6 +110,9 @@ public class MainActivity extends AppCompatActivity implements ContactosFragment
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -118,12 +134,26 @@ public class MainActivity extends AppCompatActivity implements ContactosFragment
             @Override
             public void onClick(View view) {
                 //NEW ACTIVITY
-                    Intent i = new Intent(MainActivity.this, AddContacts.class);
-                    startActivity(i);
-
+                Intent i = new Intent(MainActivity.this, AddContacts.class);
+                startActivity(i);
 
             }
         });
+
+
+        //BOTON PARA INICIAR FAVORITOS
+       /* favorito.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                //is chkIos checked?
+                if (((CheckBox) v).isChecked()) {
+                    Intent i = new Intent(MainActivity.this, AddContacts.class);
+                    startActivity(i);
+                }
+            }
+        });*/
+        //FINALIZA METODO DE BOTON FAVORITOS
 
 
     }
@@ -184,10 +214,12 @@ public class MainActivity extends AppCompatActivity implements ContactosFragment
         public static Fragment newInstance(int sectionNumber) {
             Fragment contactosFragmento = null;
 
-            switch(sectionNumber) {
-                case 1: contactosFragmento= new ContactosFragment();
+            switch (sectionNumber) {
+                case 1:
+                    contactosFragmento = new ContactosFragment();
                     break;
-                case 2: contactosFragmento= new ContactosFragment();
+                case 2:
+                    contactosFragmento = new favoritos();
                     break;
             }
 
@@ -196,13 +228,12 @@ public class MainActivity extends AppCompatActivity implements ContactosFragment
         }
 
 
-
-       @Override
+        @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_contactos, container, false);
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-           textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
             return rootView;
         }
     }
@@ -230,4 +261,5 @@ public class MainActivity extends AppCompatActivity implements ContactosFragment
             return 2;
         }
     }
+
 }

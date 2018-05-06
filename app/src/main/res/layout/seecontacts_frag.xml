@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#eff0f0"
-    tools:context="com.morales.parcialmovilesv5.AddContacts">
+    tools:context="com.morales.parcialmovilesv4.MainActivity">
 
 
     <LinearLayout

@@ -1,6 +1,7 @@
 package com.morales.parcialmovilesv4;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Created by Karla on 29/04/2018.
@@ -9,16 +10,18 @@ import java.io.Serializable;
 public class Informacion implements Serializable{
     private String ID, nombre, numero, direccion;
     private int img;
+    private boolean fav;
 
     public Informacion() {
     }
 
-    public Informacion(String ID, String nombre, String numero, String direccion, int img) {
+    public Informacion(String ID, String nombre, String numero, String direccion, int img, boolean fav) {
         this.ID = ID;
         this.nombre = nombre;
         this.numero = numero;
         this.direccion = direccion;
         this.img = img;
+        this.fav = fav;
     }
 
     public Informacion(String nombre, String numero) {
@@ -65,4 +68,16 @@ public class Informacion implements Serializable{
     public void setImg(int img) {
         this.img = img;
     }
+
+    public boolean isFav() {
+        return fav;
+    }
+
+    public void setFav(boolean fav) {
+        this.fav = fav;
+    }
+    public Boolean getFav() {
+        return fav;
+    }
+
 }

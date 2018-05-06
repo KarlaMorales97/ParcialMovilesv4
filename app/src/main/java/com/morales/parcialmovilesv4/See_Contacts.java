@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 public class See_Contacts extends AppCompatActivity {
 
-    TextView name, number;
+    TextView name, number, address;
 
     Bundle bundle;
     Intent intent;
@@ -26,6 +26,7 @@ public class See_Contacts extends AppCompatActivity {
 
         name = findViewById(R.id.name_contact);
         number = findViewById(R.id.number_contact);
+        address = findViewById(R.id.address_contact);
 
         Intent callingIntent = this.getIntent();
         bundle = callingIntent.getExtras();
@@ -36,6 +37,8 @@ public class See_Contacts extends AppCompatActivity {
 
         name.setText(informacion.getNombre());
         number.setText(informacion.getNumero());
+        address.setText(informacion.getDireccion());
+
 
         String intentAction = callingIntent.getAction();
         String intentType = callingIntent.getType();
