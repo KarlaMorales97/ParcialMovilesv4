@@ -43,8 +43,9 @@ public class favoritos extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
+    //CONSTRUCTOR VACIO
     public favoritos() {
-        // Required empty public constructor
+
     }
 
     /**
@@ -77,7 +78,7 @@ public class favoritos extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        // INFLANDO LAYOUT FAVORITOS
 
         View vista=inflater.inflate(R.layout.favoritos, container, false);
 
@@ -108,12 +109,9 @@ public class favoritos extends Fragment {
 
         };
 
-
-
         if(bundle != null){
 
             int cont=0;
-
             list = (ArrayList<Informacion>) bundle.getSerializable("KEY");
             assert list != null;
             iterator= list.listIterator();
@@ -132,21 +130,15 @@ public class favoritos extends Fragment {
                 adapter.notifyItemInserted(cont);
                 adapter.notifyItemRangeChanged(cont, datos.size());
 
-
-
                 cont++;
-
 
             }
 
 
 
         }
-
-
         rv.setAdapter(adapter);
-
-        return vista;
+            return vista;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

@@ -19,7 +19,7 @@ public class FragmentViewer extends Fragment{
     TextView name;
     TextView number;
 
-
+//FRAGMENTO LANDSCAPE
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -31,7 +31,7 @@ public class FragmentViewer extends Fragment{
 
         Bundle bundle = this.getArguments();
 
-
+//VERIFICANDO SI LO QUE RECIBE NO ES NULO
         if(bundle != null){
             Informacion informacion = (Informacion) bundle.getSerializable("KEY");
             name.setText(informacion.getNombre());

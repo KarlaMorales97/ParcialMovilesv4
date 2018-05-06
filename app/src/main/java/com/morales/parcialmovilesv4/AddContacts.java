@@ -65,11 +65,11 @@ public class AddContacts extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_contacts);
 
-
+//INSTANCIANDO ID
 
         mSetImage = (ImageView) findViewById(R.id.image_see_contact);
 
-        //INSTANCIANDO ID
+
         textView = (TextView)findViewById(R.id.TextView_BDAY);
         mCurrent = Calendar.getInstance();
         imageView = (ImageView) findViewById(R.id.image_see_contact);
@@ -82,6 +82,7 @@ public class AddContacts extends AppCompatActivity {
 
         textView.setText(day + "-" + month + "-" + year);
 
+        //IMPLEMENTANDO CALENDARIO PARA CUMPLEANIOS
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,19 +127,7 @@ public class AddContacts extends AppCompatActivity {
 
     }
 
-
-//NEW CONTACT
-  /*  public void agregar(final int position) {
-        recyclerView.scrollToPosition(1);
-
-        int index = informacio.size();
-        //informacio.add(0, new Informacion("Titulo " + index, "Subtitulo" + index,"Subtitulo" + index,"Subtitulo" + index, mSetImage.setImageResource(informacio.get(position).getImg())));
-        InformacionAdapter.notifyItemInserted(0);
-        InformacionAdapter.notifyItemRangeChanged(0,informacio.size());
-    }
- */
-
-
+//FUNCION DE MENU DE OPCIONES DE AGREGO DE IMAGEN
     private void showOptions() {
         final CharSequence[] option = {"Choose from gallery", "Exit"};
         final AlertDialog.Builder builder = new AlertDialog.Builder(AddContacts.this);
@@ -162,6 +151,8 @@ public class AddContacts extends AppCompatActivity {
         builder.show();
     }
 
+
+    //TOMAR FOTO DESDE CAMARA, LASTIMOSAMENTE NO FUNCIONO
    private void openCamera() {
         //ALMACENAR EN MEMORIA EXTERNA
         File file = new File(Environment.getExternalStorageDirectory(), MEDIA_DIRECTORY);
@@ -198,6 +189,7 @@ public class AddContacts extends AppCompatActivity {
         mPath = savedInstanceState.getString("file_path");
     }
 
+    //CASOS SELECIONADOS, PHOTO_CODE PARA QUE IMAGENES DEL ALBUM DE CAMARA SEAN URI Y NO DETENGA LA APLICACION
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -219,6 +211,7 @@ public class AddContacts extends AppCompatActivity {
 
 
                     break;
+                    //GALERIA
                 case SELECT_PICTURE:
                     Uri path = data.getData();
                     mSetImage.setImageURI(path);
@@ -228,6 +221,7 @@ public class AddContacts extends AppCompatActivity {
         }
     }
 
+    //PERMISOS Y EXPLICACION
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);

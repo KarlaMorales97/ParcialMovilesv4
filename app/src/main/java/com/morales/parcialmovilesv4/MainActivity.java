@@ -54,14 +54,6 @@ public class MainActivity extends AppCompatActivity implements ContactosFragment
 
     static final int REQUEST_CODE_ASK_PERMISSION = 2018;
     int Read;
-  /*  CheckBox favorito;
-    TextView left, middle, right;
-    ArrayList<Informacion> list;
-    ArrayList<Informacion> infs;
-    RecyclerView rv;
-    LinearLayoutManager lManager;
-    InformacionAdapter adapter;
-    ContactosFragment informationcontact; */
 
     CheckBox favorito;
 
@@ -129,6 +121,7 @@ public class MainActivity extends AppCompatActivity implements ContactosFragment
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
+        //BOTON FLOTANTE DONDE SE INICIA LA NUEVA ACTIVIDAD PARA AGREGAR CONTACTO
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,21 +132,6 @@ public class MainActivity extends AppCompatActivity implements ContactosFragment
 
             }
         });
-
-
-        //BOTON PARA INICIAR FAVORITOS
-       /* favorito.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                //is chkIos checked?
-                if (((CheckBox) v).isChecked()) {
-                    Intent i = new Intent(MainActivity.this, AddContacts.class);
-                    startActivity(i);
-                }
-            }
-        });*/
-        //FINALIZA METODO DE BOTON FAVORITOS
 
 
     }
@@ -211,6 +189,8 @@ public class MainActivity extends AppCompatActivity implements ContactosFragment
          * Returns a new instance of this fragment for the given section
          * number.
          */
+
+        //DEPENDIENDO DEL SECTION NUMBER SE INICIALIZARA EL FRAGMENTO CONVENIENTE
         public static Fragment newInstance(int sectionNumber) {
             Fragment contactosFragmento = null;
 
@@ -255,6 +235,7 @@ public class MainActivity extends AppCompatActivity implements ContactosFragment
             return PlaceholderFragment.newInstance(position + 1);
         }
 
+     //OBTENIENDO NUMERO DE TAB
         @Override
         public int getCount() {
             // Show 2 total pages.

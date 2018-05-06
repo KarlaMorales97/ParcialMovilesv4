@@ -15,6 +15,8 @@ public class Informacion implements Serializable{
     public Informacion() {
     }
 
+    //CONSTRUCTOR CON TODOS SUS ATRIBUTOS
+
     public Informacion(String ID, String nombre, String numero, String direccion, int img, boolean fav) {
         this.ID = ID;
         this.nombre = nombre;
@@ -24,6 +26,8 @@ public class Informacion implements Serializable{
         this.fav = fav;
     }
 
+
+    //CONSTRUCTOR CON ATRIBUTOS A MOSTRARSE
     public Informacion(String nombre, String numero) {
         this.nombre = nombre;
         this.numero = numero;

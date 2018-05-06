@@ -48,7 +48,7 @@ public class See_Contacts extends AppCompatActivity {
         Intent callingIntent = this.getIntent();
         bundle = callingIntent.getExtras();
 
-
+//OBTENIENDO LA INFORMACION
         Informacion informacion = (Informacion) bundle.getSerializable("KEY");
 
 
@@ -61,6 +61,8 @@ public class See_Contacts extends AppCompatActivity {
         String intentType = callingIntent.getType();
     }
 
+
+  //HABILITANDO EL BOTON DE COMPARTIR
     public void Share(View view){
 
         Bitmap bitmap =getBitmapFromView(idForSaveView);
@@ -82,6 +84,7 @@ public class See_Contacts extends AppCompatActivity {
         }
     }
 
+  //SE COMPARTE IMAGEN
     private Bitmap getBitmapFromView(View view) {
         Bitmap returnedBitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(),Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(returnedBitmap);
@@ -97,7 +100,7 @@ public class See_Contacts extends AppCompatActivity {
         return returnedBitmap;
     }
 
-
+//HABILITANDO EL BOTON DE LLAMADA Y VERIFICANDO PERMISOS
     public void Call(View v){
         makePhoneCall();
     }
@@ -113,6 +116,7 @@ public class See_Contacts extends AppCompatActivity {
         }
     }
 
+  //FUNCION DE HACER LA LLAMADA
     private void makePhoneCall(){
         String numero = number.getText().toString();
         if(numero.trim().length() > 0){

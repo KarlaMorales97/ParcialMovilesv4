@@ -69,11 +69,14 @@ public abstract class InformacionAdapter extends RecyclerView.Adapter<Informacio
 
         if (contexto.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
 
+     //OBTENIENDO LOS DATOS EN LA POSICION ACTUAL
             holder.name.setText(informacion.get(position).getNombre());
 //            holder.img.setImageResource(informacion.get(position).getImg());
             final Bundle bundle = new Bundle();
             bundle.putSerializable("KEY", informacion.get(position));
 
+
+    //INICIANDO SEGUNDA ACTIVIDAD PARA VER CONTACTO
             holder.card.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -98,8 +101,6 @@ public abstract class InformacionAdapter extends RecyclerView.Adapter<Informacio
 
             //BOTON PARA INICIAR FAVORITOS
 
-
-
             holder.favorito.setOnClickListener(new View.OnClickListener() {
 
                 int value;
@@ -120,6 +121,7 @@ public abstract class InformacionAdapter extends RecyclerView.Adapter<Informacio
 
         } else if (contexto.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
 
+    //INICIANDO FRAGMENTO SOBRE LA MISMA ACTIVIDAD
             ContactosFragment contactosFragment;
 
             FragmentViewer frag = new FragmentViewer();
@@ -146,6 +148,8 @@ public abstract class InformacionAdapter extends RecyclerView.Adapter<Informacio
     public int getItemCount() {
         return informacion.size();
     }
+
+    //INSTANCIANDO ID
 
     public static class InformacionViewHolder extends RecyclerView.ViewHolder {
 
@@ -174,6 +178,7 @@ public abstract class InformacionAdapter extends RecyclerView.Adapter<Informacio
         this.informacion = informacion;
     }
 
+//VEROFICAR ESTADO DEL FAVORITO
 
     public boolean validar(int estado){
         int act=1;
@@ -188,7 +193,7 @@ public abstract class InformacionAdapter extends RecyclerView.Adapter<Informacio
         }
     }
 
-
+//CLASES ABSTRACTAS
     public abstract void onVerClick(View v,int pos);
     public abstract void numFavs(int favs);
 

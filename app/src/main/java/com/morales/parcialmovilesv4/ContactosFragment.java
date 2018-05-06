@@ -50,10 +50,12 @@ public class ContactosFragment extends Fragment{
 
     private List<Informacion> LiftSaves = new ArrayList<Informacion>();
 
+    //CONTSRUCTOR VACIO
     public ContactosFragment() {
 
     }
 
+//INSTANCIANDO
 
     public static ContactosFragment newInstance(String param1, String param2) {
         ContactosFragment fragment = new ContactosFragment();
@@ -87,15 +89,19 @@ public class ContactosFragment extends Fragment{
         datos= new ArrayList<>();
         list = new ArrayList<>();
 
+
+    //HACIENDO UN GRIDLAYOUT SOBRE EL CARDVIEW, ESPECIFICANDO QUE EL RECYCLER VIEW TENDRA 3 COLUMNAS DE CARDVIEW
         final GridLayoutManager gManager = new GridLayoutManager(getContext(),3);
         final RecyclerView.LayoutManager lManager = gManager;
         rv.setLayoutManager(lManager);
 
+    //OBTENIENDO DATOS Y MANDARLOS AL ADAPTADOR
 
         final InformacionAdapter adapter = new InformacionAdapter(getContext(), ObtenerDatos()) {
             @Override
             public void onVerClick(View v, int pos) {
 
+            //ENVIANDO INFORMACION DE CONTACTOS A FAVORITOS
                  favoritos frag = new favoritos();
 
                  Bundle bundle = new Bundle();
