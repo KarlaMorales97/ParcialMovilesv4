@@ -1,7 +1,7 @@
 package com.morales.parcialmovilesv4;
 
 
-
+import android.app.FragmentManager;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
@@ -16,6 +16,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -42,6 +43,7 @@ public class ContactosFragment extends Fragment{
     private ListView saveListView;
     ArrayList<Informacion> datos;
     ArrayList<Informacion> list;
+    CheckBox favorito;
 
 
 
@@ -75,13 +77,17 @@ public class ContactosFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         vista = inflater.inflate(R.layout.recycler, container, false);
+        vista2 = inflater.inflate(R.layout.favoritos, container, false);
+
 
         rv =  vista.findViewById(R.id.recycler);
+        favorito = vista2.findViewById(R.id.fav);
+
         datos= new ArrayList<>();
         list = new ArrayList<>();
 
-        GridLayoutManager gManager = new GridLayoutManager(getContext(),3);
-        RecyclerView.LayoutManager lManager = gManager;
+        final GridLayoutManager gManager = new GridLayoutManager(getContext(),3);
+        final RecyclerView.LayoutManager lManager = gManager;
         rv.setLayoutManager(lManager);
 
 
@@ -117,10 +123,12 @@ public class ContactosFragment extends Fragment{
 
 
     private View vista;
+    private View vista2;
     RecyclerView rv;
     InformacionAdapter adapter;
     TextView textView;
     ArrayList<Informacion> informacion;
+    favoritos fv;
     //LinearLayoutManager lManager;
 
 //OBTENER DATOS DEL CONTACTO

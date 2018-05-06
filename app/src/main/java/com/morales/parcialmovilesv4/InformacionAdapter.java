@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.RequiresApi;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -69,7 +70,7 @@ public abstract class InformacionAdapter extends RecyclerView.Adapter<Informacio
         if (contexto.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
 
             holder.name.setText(informacion.get(position).getNombre());
-            holder.img.setImageResource(informacion.get(position).getImg());
+//            holder.img.setImageResource(informacion.get(position).getImg());
             final Bundle bundle = new Bundle();
             bundle.putSerializable("KEY", informacion.get(position));
 
@@ -87,7 +88,7 @@ public abstract class InformacionAdapter extends RecyclerView.Adapter<Informacio
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean fav) {
 
-
+                    holder.favorito.setChecked(true);
                     informacion.get(position).setFav(fav);
                     onVerClick(buttonView,position);
                     numFavs(favs);
@@ -106,13 +107,9 @@ public abstract class InformacionAdapter extends RecyclerView.Adapter<Informacio
                 @Override
                 public void onClick(View v) {
                     if(validar(value)) {
-                        Toast.makeText(v.getContext(), "Agrego " + informacion.get(position).getNombre() + " a favoritos", Toast.LENGTH_LONG).show();
-
-
-
+                        holder.favorito.setHasTransientState(true);
+                        Toast.makeText(v.getContext(), "You added " + informacion.get(position).getNombre() + " successfully", Toast.LENGTH_LONG).show();
                         value = 1;
-
-
                     }
                     else{
 
@@ -124,14 +121,17 @@ public abstract class InformacionAdapter extends RecyclerView.Adapter<Informacio
 
         } else if (contexto.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
 
+            ContactosFragment contactosFragment;
 
             FragmentViewer frag = new FragmentViewer();
             Bundle bundle = new Bundle();
             bundle.putSerializable("KEY", informacion.get(position));
             frag.setArguments(bundle);
 
+
+
             FragmentManager fragmentManager = frag.getChildFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            final FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
             fragmentTransaction.replace(R.id.viewer, frag);
             fragmentTransaction.addToBackStack(null);
@@ -162,7 +162,7 @@ public abstract class InformacionAdapter extends RecyclerView.Adapter<Informacio
             super(itemView);
             card = itemView.findViewById(R.id.card_view);
             name = itemView.findViewById(R.id.name);
-            img = itemView.findViewById(R.id.img);
+  //          img = itemView.findViewById(R.id.img);
 //            fav = itemView.findViewById(R.id.ButtonVer);
             favorito = itemView.findViewById(R.id.fav);
             rv = itemView.findViewById(R.id.recycler);
