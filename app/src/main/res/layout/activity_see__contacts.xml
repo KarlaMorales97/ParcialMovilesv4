@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#eff0f0"
-    tools:context="com.morales.parcialmovilesv4.AddContacts">
+    tools:context="com.morales.parcialmovilesv4.See_Contacts">
 
 
     <LinearLayout
@@ -82,13 +82,16 @@
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:layout_weight="1"
-           android:button="@drawable/call"/>
+           android:button="@drawable/call"
+           android:onClick="Call"/>
 
         <CheckBox
+            android:id="@+id/share"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:button="@drawable/share" />
+            android:button="@drawable/share"
+            android:onClick="Share"/>
 
 
     </LinearLayout>

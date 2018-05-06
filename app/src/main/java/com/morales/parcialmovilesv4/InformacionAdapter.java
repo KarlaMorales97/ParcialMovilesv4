@@ -107,7 +107,6 @@ public abstract class InformacionAdapter extends RecyclerView.Adapter<Informacio
                 @Override
                 public void onClick(View v) {
                     if(validar(value)) {
-                        holder.favorito.setHasTransientState(true);
                         Toast.makeText(v.getContext(), "You added " + informacion.get(position).getNombre() + " successfully", Toast.LENGTH_LONG).show();
                         value = 1;
                     }

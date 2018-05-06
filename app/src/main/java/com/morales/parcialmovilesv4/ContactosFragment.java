@@ -44,6 +44,7 @@ public class ContactosFragment extends Fragment{
     ArrayList<Informacion> datos;
     ArrayList<Informacion> list;
     CheckBox favorito;
+    Boolean check;
 
 
 
