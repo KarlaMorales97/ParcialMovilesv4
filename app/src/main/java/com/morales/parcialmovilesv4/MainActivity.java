@@ -100,10 +100,13 @@ public class MainActivity extends AppCompatActivity implements ContactosFragment
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        for(Fragment fragment : getSupportFragmentManager().getFragments()){
+        Toast.makeText(getApplicationContext(), "ESTOY EN ON RWSULT MAAAIJ", Toast.LENGTH_SHORT).show();
+        for(Fragment fragment : getSupportFragmentManager().getFragments()) {
             fragment.onActivityResult(requestCode, resultCode, data);
         }
     }
+
+
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -136,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements ContactosFragment
             public void onClick(View view) {
                 //NEW ACTIVITY
                 Intent i = new Intent(MainActivity.this, AddContacts.class);
-                startActivity(i);
+                startActivityForResult(i, 1);
 
             }
         });
@@ -162,9 +165,20 @@ public class MainActivity extends AppCompatActivity implements ContactosFragment
 //Listener del search bar...
 
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            public boolean onQueryTextSubmit(ArrayList<Informacion> inf, String query) {
+                ContactosFragment ca = new ContactosFragment();
+                Toast.makeText(getApplicationContext(), query, Toast.LENGTH_SHORT).show();
+
+                ca.filterData(inf, query);
+
+
+                return true;
+            }
+
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(getApplicationContext(), query, Toast.LENGTH_SHORT).show();
+
                 return true;
             }
 

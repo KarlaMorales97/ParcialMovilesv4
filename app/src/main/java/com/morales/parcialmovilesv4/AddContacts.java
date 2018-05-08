@@ -1,5 +1,6 @@
 package com.morales.parcialmovilesv4;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -125,16 +126,24 @@ public class AddContacts extends AppCompatActivity {
 
 
                 inf = new Informacion(nome);
-                Toast.makeText(v.getContext(),"You added " + inf.getNombre(), Toast.LENGTH_LONG ).show();
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+               // Toast.makeText(v.getContext(),"You added " + inf.getNombre(), Toast.LENGTH_LONG ).show();
+                /*Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 intent.putExtra("contacadd", inf);
-                startActivity(intent);
+                startActivity(intent);*/
                 /*Bundle bundle = new Bundle();
                 bundle.putSerializable("KEY_ADD", inf);
                 sendIntent.putExtras(bundle);
                 sendIntent.putExtra(Intent.EXTRA_TEXT,position);
                 AddContacts.this.startActivity(sendIntent);*/
+
+
+                Intent returnIntent = new Intent(getApplicationContext(), MainActivity.class);
+                returnIntent.putExtra("contacadd",inf);
+                setResult(Activity.RESULT_OK,returnIntent);
+                finish();
+
             }
+
         });
 
 

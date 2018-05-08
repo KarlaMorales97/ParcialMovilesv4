@@ -95,6 +95,8 @@ public abstract class InformacionAdapter extends RecyclerView.Adapter<Informacio
 
      //ADD CONTACT
 
+
+
     //BOTON DELETE
             holder.mDeleteImage.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -54,6 +54,7 @@ public class ContactosFragment extends Fragment{
     Boolean check;
     ImageView delete;
     Button addContact;
+    TextView name;
     Informacion informacionAdd = null;
     String position;
     private InformacionAdapter adapter;
@@ -105,12 +106,14 @@ public class ContactosFragment extends Fragment{
         favorito = vista2.findViewById(R.id.fav);
         delete = vista.findViewById(R.id.image_delete);
         addContact = vista.findViewById(R.id.add_Button);
+        name = vista.findViewById(R.id.name);
 
         datos= new ArrayList<>();
         list = new ArrayList<>();
         add = new ArrayList<>();
         informacion = new ArrayList<>();
         informacionAdd = new Informacion();
+        ihh = new ArrayList<Informacion>();
 
 
     //HACIENDO UN GRIDLAYOUT SOBRE EL CARDVIEW, ESPECIFICANDO QUE EL RECYCLER VIEW TENDRA 3 COLUMNAS DE CARDVIEW
@@ -179,7 +182,9 @@ public class ContactosFragment extends Fragment{
     InformacionAdapter adapterr;
     TextView textView;
     ArrayList<Informacion> informacion;
+    ArrayList<Informacion> ihh;
     favoritos fv;
+    Informacion new_c;
     //LinearLayoutManager lManager;
 
 //OBTENER DATOS DEL CONTACTO
@@ -203,6 +208,26 @@ public class ContactosFragment extends Fragment{
 
     }
 //FINALIZANDO
+//SEAARCH
+    public ArrayList<Informacion> filterData(ArrayList<Informacion> con, String query){
+        ArrayList<Informacion> filtered = new ArrayList<>();
+        query = query.toUpperCase();
+
+        for(Informacion model : con){
+            final String textName = model.getNombre().toUpperCase();
+            if(textName.startsWith(query) || textName.contains(query)){
+                filtered.add(model);
+            }
+
+        }
+
+        return filtered;
+    }
+
+
+
+
+
 
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -260,11 +285,15 @@ public class ContactosFragment extends Fragment{
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode == RESULT_OK && requestCode == 3){
-            if(data.hasExtra("contacadd") == true){
+        super.onActivityResult(requestCode, resultCode, data);
+        Toast.makeText(getContext(), "ESTOY EN ON RWSULT FRAGMENT", Toast.LENGTH_SHORT).show();
+        if(resultCode == RESULT_OK && requestCode == 1){
+            if(data.hasExtra("contacadd")){
                 Toast.makeText(getContext(), "CONTEADD", Toast.LENGTH_SHORT).show();
                 Informacion getInf = (Informacion) data.getSerializableExtra("contacadd");
-                Informacion new_c = new Informacion(getInf.getNombre());
+               // Toast.makeText(getContext(), getInf.getNombre(), Toast.LENGTH_SHORT).show();
+                new_c = new Informacion(getInf.getNombre());
+                Toast.makeText(getContext(), "Se arego a " + new_c.getNombre() + " pero no aparece", Toast.LENGTH_SHORT).show();
                 list.add(new_c);
 
             }
