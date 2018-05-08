@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static android.app.PendingIntent.getActivity;
@@ -43,7 +44,7 @@ public abstract class InformacionAdapter extends RecyclerView.Adapter<Informacio
 
     private Context contexto;
     private LayoutInflater inflater;
-    public List<Informacion> informacion;
+    public ArrayList<Informacion> informacion;
     private static boolean fav = false;
     public InformacionAdapter mAdapter;
     AddContacts addContacts;
@@ -55,7 +56,7 @@ public abstract class InformacionAdapter extends RecyclerView.Adapter<Informacio
 
     }
 
-    public InformacionAdapter(Context contexto, List<Informacion> informacion) {
+    public InformacionAdapter(Context contexto, ArrayList<Informacion> informacion) {
         this.contexto = contexto;
         this.informacion = informacion;
     }
@@ -203,7 +204,7 @@ public abstract class InformacionAdapter extends RecyclerView.Adapter<Informacio
         }
     }
 
-    public InformacionAdapter(List<Informacion> informacion) {
+    public InformacionAdapter(ArrayList<Informacion> informacion) {
         this.informacion = informacion;
     }
 

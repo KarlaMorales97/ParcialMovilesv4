@@ -26,6 +26,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.app.Activity.RESULT_OK;
 import static java.lang.Integer.parseInt;
 
 /**
@@ -183,8 +184,8 @@ public class ContactosFragment extends Fragment{
 
 //OBTENER DATOS DEL CONTACTO
     @RequiresApi(api = Build.VERSION_CODES.M)
-    List<Informacion> ObtenerDatos(){
-        List<Informacion> list = new ArrayList<>();
+    ArrayList<Informacion> ObtenerDatos(){
+        ArrayList<Informacion> list = new ArrayList<>();
 
         String selectionClause = ContactsContract.Data.MIMETYPE + "='" +
                 ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE + "' AND "
@@ -231,12 +232,12 @@ public class ContactosFragment extends Fragment{
     public void onResume(){
         super.onResume();
         informacionAdd = new Informacion();
-        Toast.makeText(getContext(), "ESTOY EN ONRESUME", Toast.LENGTH_LONG).show();
+        //Toast.makeText(getContext(), "ESTOY EN ONRESUME", Toast.LENGTH_LONG).show();
         position = null;
         informacionAdd = null;
         Intent intent = getActivity().getIntent();
-            Toast.makeText(getContext(), "NO ES NULL", Toast.LENGTH_LONG).show();
-            Add();
+            //Toast.makeText(getContext(), "NO ES NULL", Toast.LENGTH_LONG).show();
+            //Add();
 
 
     }
@@ -257,27 +258,18 @@ public class ContactosFragment extends Fragment{
         void onFragmentInteraction(Uri uri);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == RESULT_OK && requestCode == 3){
+            if(data.hasExtra("contacadd") == true){
+                Toast.makeText(getContext(), "CONTEADD", Toast.LENGTH_SHORT).show();
+                Informacion getInf = (Informacion) data.getSerializableExtra("contacadd");
+                Informacion new_c = new Informacion(getInf.getNombre());
+                list.add(new_c);
 
-    public void Add(){
-        ContactosFragment cf = new ContactosFragment();
-
-        informacionAdd = new Informacion();
-        Intent intent = getActivity().getIntent();
-        Bundle bundle = intent.getExtras();
-        assert bundle != null;
-        informacionAdd = (Informacion) bundle.getSerializable("KEY_ADD");
-        position = intent.getStringExtra(Intent.EXTRA_TEXT);
-
-
-
-      if (add.get(parseInt(position)) != informacionAdd) {
-            add.set(parseInt(position), informacionAdd);
-            add.set(parseInt(position), informacionAdd);
-
-
+            }
         }
-        adapter.notifyItemInserted(parseInt(position));
-
+        adapter.notifyDataSetChanged();
     }
 }
 

@@ -126,12 +126,14 @@ public class AddContacts extends AppCompatActivity {
 
                 inf = new Informacion(nome);
                 Toast.makeText(v.getContext(),"You added " + inf.getNombre(), Toast.LENGTH_LONG ).show();
-                Intent sendIntent = new Intent(getApplicationContext(), MainActivity.class);
-                Bundle bundle = new Bundle();
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.putExtra("contacadd", inf);
+                startActivity(intent);
+                /*Bundle bundle = new Bundle();
                 bundle.putSerializable("KEY_ADD", inf);
                 sendIntent.putExtras(bundle);
                 sendIntent.putExtra(Intent.EXTRA_TEXT,position);
-                AddContacts.this.startActivity(sendIntent);
+                AddContacts.this.startActivity(sendIntent);*/
             }
         });
 

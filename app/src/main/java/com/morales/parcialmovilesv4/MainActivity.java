@@ -97,6 +97,14 @@ public class MainActivity extends AppCompatActivity implements ContactosFragment
     private ContactosFragment Uri;
 
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        for(Fragment fragment : getSupportFragmentManager().getFragments()){
+            fragment.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,6 +143,9 @@ public class MainActivity extends AppCompatActivity implements ContactosFragment
 
 
     }
+
+
+
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
