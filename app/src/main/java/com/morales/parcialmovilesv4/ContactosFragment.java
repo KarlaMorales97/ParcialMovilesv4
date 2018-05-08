@@ -1,8 +1,8 @@
 package com.morales.parcialmovilesv4;
 
 
-import android.app.FragmentManager;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
@@ -16,12 +16,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.lang.Integer.parseInt;
 
 /**
  * Created by Karla on 29/04/2018.
@@ -43,10 +48,14 @@ public class ContactosFragment extends Fragment{
     private ListView saveListView;
     ArrayList<Informacion> datos;
     ArrayList<Informacion> list;
+    ArrayList<Informacion> add;
     CheckBox favorito;
     Boolean check;
-
-
+    ImageView delete;
+    Button addContact;
+    Informacion informacionAdd = null;
+    String position;
+    private InformacionAdapter adapter;
 
     private List<Informacion> LiftSaves = new ArrayList<Informacion>();
 
@@ -75,6 +84,13 @@ public class ContactosFragment extends Fragment{
         }
     }
 
+
+
+
+
+
+
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -83,11 +99,17 @@ public class ContactosFragment extends Fragment{
         vista2 = inflater.inflate(R.layout.favoritos, container, false);
 
 
+
         rv =  vista.findViewById(R.id.recycler);
         favorito = vista2.findViewById(R.id.fav);
+        delete = vista.findViewById(R.id.image_delete);
+        addContact = vista.findViewById(R.id.add_Button);
 
         datos= new ArrayList<>();
         list = new ArrayList<>();
+        add = new ArrayList<>();
+        informacion = new ArrayList<>();
+        informacionAdd = new Informacion();
 
 
     //HACIENDO UN GRIDLAYOUT SOBRE EL CARDVIEW, ESPECIFICANDO QUE EL RECYCLER VIEW TENDRA 3 COLUMNAS DE CARDVIEW
@@ -95,30 +117,51 @@ public class ContactosFragment extends Fragment{
         final RecyclerView.LayoutManager lManager = gManager;
         rv.setLayoutManager(lManager);
 
+
+
     //OBTENIENDO DATOS Y MANDARLOS AL ADAPTADOR
 
-        final InformacionAdapter adapter = new InformacionAdapter(getContext(), ObtenerDatos()) {
+         adapter = new InformacionAdapter(getContext(), ObtenerDatos()) {
+
             @Override
             public void onVerClick(View v, int pos) {
 
-            //ENVIANDO INFORMACION DE CONTACTOS A FAVORITOS
-                 favoritos frag = new favoritos();
+                int value = 1;
+            if(validar(value)) {
+                Toast.makeText(getContext(), "QUE ONDIS", Toast.LENGTH_LONG).show();
+                favoritos frag = new favoritos();
 
-                 Bundle bundle = new Bundle();
-                 list.add(ObtenerDatos().get(pos));
-                 bundle.putSerializable("KEY", list);
+                Bundle bundle = new Bundle();
+                list.add(ObtenerDatos().get(pos));
+                bundle.putSerializable("KEY", list);
 
-                 frag.setArguments(bundle);
-                 final FragmentTransaction ft = getFragmentManager().beginTransaction();
-                 ft.replace(R.id.frameFav, frag);
-                 ft.commit();
+                frag.setArguments(bundle);
+                final FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.frameFav, frag);
+                ft.commit();
+            }
+            else if(!validar(value)){
+                Toast.makeText(getContext(), "TATA", Toast.LENGTH_LONG).show();
+            }
+
 
             }
 
             @Override
-            public void numFavs(int favs) {
+            public void numFavs(int position) {
+
 
             }
+
+            @Override
+            public void delete(int position) {
+                datos.remove(ObtenerDatos().get(position));
+                mAdapter.notifyItemRemoved(position);
+
+            }
+            //---
+
+
         };
 
         rv.setAdapter(adapter);
@@ -132,7 +175,7 @@ public class ContactosFragment extends Fragment{
     private View vista;
     private View vista2;
     RecyclerView rv;
-    InformacionAdapter adapter;
+    InformacionAdapter adapterr;
     TextView textView;
     ArrayList<Informacion> informacion;
     favoritos fv;
@@ -184,6 +227,20 @@ public class ContactosFragment extends Fragment{
     }
 
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        informacionAdd = new Informacion();
+        Toast.makeText(getContext(), "ESTOY EN ONRESUME", Toast.LENGTH_LONG).show();
+        position = null;
+        informacionAdd = null;
+        Intent intent = getActivity().getIntent();
+            Toast.makeText(getContext(), "NO ES NULL", Toast.LENGTH_LONG).show();
+            Add();
+
+
+    }
+
 
     /**
      * This interface must be implemented by activities that contain this
@@ -198,6 +255,29 @@ public class ContactosFragment extends Fragment{
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+
+    public void Add(){
+        ContactosFragment cf = new ContactosFragment();
+
+        informacionAdd = new Informacion();
+        Intent intent = getActivity().getIntent();
+        Bundle bundle = intent.getExtras();
+        assert bundle != null;
+        informacionAdd = (Informacion) bundle.getSerializable("KEY_ADD");
+        position = intent.getStringExtra(Intent.EXTRA_TEXT);
+
+
+
+      if (add.get(parseInt(position)) != informacionAdd) {
+            add.set(parseInt(position), informacionAdd);
+            add.set(parseInt(position), informacionAdd);
+
+
+        }
+        adapter.notifyItemInserted(parseInt(position));
+
     }
 }
 

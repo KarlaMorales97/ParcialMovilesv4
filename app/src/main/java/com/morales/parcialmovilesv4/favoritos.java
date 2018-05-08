@@ -27,7 +27,6 @@ public class favoritos extends Fragment {
     LinearLayoutManager lManager;
     Bundle bundle;
     Iterator iterator;
-    ContactosFragment Conta;
 
 
 
@@ -103,7 +102,13 @@ public class favoritos extends Fragment {
             }
 
             @Override
-            public void numFavs(int favs) {
+            public void numFavs(int position) {
+
+            }
+
+
+            @Override
+            public void delete(int position) {
 
             }
 

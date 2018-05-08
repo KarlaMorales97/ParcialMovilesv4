@@ -4,10 +4,9 @@ import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.Settings;
@@ -15,12 +14,12 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -37,6 +36,8 @@ public class AddContacts extends AppCompatActivity {
     TextView textView;
     Calendar mCurrent;
     int day, month, year;
+    public Button addContact;
+    InformacionAdapter informacionAdapter;
 
 
     private static String APP_DIRECTORY = "MyPictureApp/";
@@ -50,13 +51,20 @@ public class AddContacts extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private InformacionAdapter infromacionAdapter;
-    private ArrayList<Informacion> informacio;
+    private ArrayList<Informacion> informacion;
+    private ArrayList<Informacion> informacion2;
+    String position;
+    Informacion inforContact;
+
+
 
 
 
     private ImageView mSetImage;
     private Button mOptionButton;
     private RelativeLayout mRlView;
+    EditText name;
+    public Informacion inf;
 
     private String mPath;
 
@@ -67,12 +75,21 @@ public class AddContacts extends AppCompatActivity {
 
 //INSTANCIANDO ID
 
+        addContact = (Button)findViewById(R.id.add_Button);
         mSetImage = (ImageView) findViewById(R.id.image_see_contact);
+        name = (EditText)findViewById(R.id.EditText_Name);
 
 
         textView = (TextView)findViewById(R.id.TextView_BDAY);
         mCurrent = Calendar.getInstance();
         imageView = (ImageView) findViewById(R.id.image_see_contact);
+
+
+        final Intent i = this.getIntent();
+        final Bundle bundle = new Bundle();
+        bundle.getSerializable("KEYY");
+        position= i.getStringExtra(Intent.EXTRA_TEXT);
+
 
         day = mCurrent.get(Calendar.DAY_OF_MONTH);
         month = mCurrent.get(Calendar.MONTH);
@@ -100,6 +117,25 @@ public class AddContacts extends AppCompatActivity {
         });
 
 
+        //BOTON AGREGAR CONTACTO
+        addContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String nome = name.getText().toString();
+
+
+                inf = new Informacion(nome);
+                Toast.makeText(v.getContext(),"You added " + inf.getNombre(), Toast.LENGTH_LONG ).show();
+                Intent sendIntent = new Intent(getApplicationContext(), MainActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("KEY_ADD", inf);
+                sendIntent.putExtras(bundle);
+                sendIntent.putExtra(Intent.EXTRA_TEXT,position);
+                AddContacts.this.startActivity(sendIntent);
+            }
+        });
+
+
         //FUNCIONALIDAD DE BOTON ADD_IMAGE
         FloatingActionButton add_image = (FloatingActionButton) findViewById(R.id.add_image);
         add_image.setOnClickListener(new View.OnClickListener() {
@@ -113,16 +149,6 @@ public class AddContacts extends AppCompatActivity {
         //FINALIZANDO FUNCIONALIDAD
 
 
-        //FUNCIONALIDAD DE BOTON ADD NEW CONTACT
-        Button add_contact = (Button) findViewById(R.id.add_Button);
-        add_contact.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //NEW ACTIVITY
-                showOptions();
-
-            }
-        });
         //FINALIZANDO FUNCIONALIDAD ADD NEW CONTACT
 
     }

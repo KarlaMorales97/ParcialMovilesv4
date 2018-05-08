@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.DrawableRes;
 import android.support.annotation.RequiresApi;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -44,11 +43,17 @@ public abstract class InformacionAdapter extends RecyclerView.Adapter<Informacio
 
     private Context contexto;
     private LayoutInflater inflater;
-    private List<Informacion> informacion;
+    public List<Informacion> informacion;
     private static boolean fav = false;
-    InformacionAdapter inforAdap;
+    public InformacionAdapter mAdapter;
+    AddContacts addContacts;
+    Button Ax;
     int favs= 0;
 
+
+    public InformacionAdapter(){
+
+    }
 
     public InformacionAdapter(Context contexto, List<Informacion> informacion) {
         this.contexto = contexto;
@@ -69,6 +74,7 @@ public abstract class InformacionAdapter extends RecyclerView.Adapter<Informacio
 
         if (contexto.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
 
+
      //OBTENIENDO LOS DATOS EN LA POSICION ACTUAL
             holder.name.setText(informacion.get(position).getNombre());
 //            holder.img.setImageResource(informacion.get(position).getImg());
@@ -83,6 +89,16 @@ public abstract class InformacionAdapter extends RecyclerView.Adapter<Informacio
                     Intent intent = new Intent(contexto, See_Contacts.class);
                     intent.putExtras(bundle);
                     contexto.startActivity(intent);
+                }
+            });
+
+     //ADD CONTACT
+
+    //BOTON DELETE
+            holder.mDeleteImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(v.getContext(), "You deleted " + informacion.get(position).getNombre() + " successfully", Toast.LENGTH_LONG).show();
                 }
             });
 
@@ -103,19 +119,24 @@ public abstract class InformacionAdapter extends RecyclerView.Adapter<Informacio
 
             holder.favorito.setOnClickListener(new View.OnClickListener() {
 
-                int value;
+                int value = 1;
 
                 @Override
                 public void onClick(View v) {
                     if(validar(value)) {
-                        Toast.makeText(v.getContext(), "You added " + informacion.get(position).getNombre() + " successfully", Toast.LENGTH_LONG).show();
+                        Toast.makeText(v.getContext(), "You added " + informacion.get(position).getNombre() + " successfully to favorites", Toast.LENGTH_LONG).show();
+                        value = 0;
+
+
+                    }
+                    else if(!validar(value)){
+                        Toast.makeText(v.getContext(),"Deletes from favorites", Toast.LENGTH_LONG).show();
+
                         value = 1;
                     }
-                    else{
 
-                        value = 0;
-                    }
                 }
+
             });
             //FINALIZA METODO DE BOTON FAVORITOS
 
@@ -143,6 +164,12 @@ public abstract class InformacionAdapter extends RecyclerView.Adapter<Informacio
 
     }
 
+    //METODO DE AGREGAR
+    private void addItem(int position, Informacion infoData) {
+        informacion.add(position, infoData);
+        notifyItemInserted(position);
+    }
+
 
     @Override
     public int getItemCount() {
@@ -156,9 +183,11 @@ public abstract class InformacionAdapter extends RecyclerView.Adapter<Informacio
         CardView card;
         TextView name;
         ImageView img;
-        Button buttonVer;
+        Button addContact;
         CheckBox favorito;
         RecyclerView rv;
+        public ImageView mDeleteImage;
+
 
 
         public InformacionViewHolder(View itemView, final AdapterView.OnItemClickListener listener) {
@@ -169,7 +198,7 @@ public abstract class InformacionAdapter extends RecyclerView.Adapter<Informacio
 //            fav = itemView.findViewById(R.id.ButtonVer);
             favorito = itemView.findViewById(R.id.fav);
             rv = itemView.findViewById(R.id.recycler);
-
+            mDeleteImage = itemView.findViewById(R.id.image_delete);
 
         }
     }
@@ -178,24 +207,31 @@ public abstract class InformacionAdapter extends RecyclerView.Adapter<Informacio
         this.informacion = informacion;
     }
 
+
+    //FUNCION DELETE
+   /* public void removeitem(int position){
+        informacion.remove(position);
+        mAdapter.notifyItemRemoved(position);
+    }*/
+
 //VEROFICAR ESTADO DEL FAVORITO
 
-    public boolean validar(int estado){
+    public boolean validar(int value){
         int act=1;
-        boolean flag;
+        boolean bool = false;
         int desactivado;
-        if(act!=estado){
-            act=1;
-            return true;
+        if(value == 1){
+            bool = true;
         }
-        else{
-            return false;
+        else if(value == 0){
+            bool = false;
         }
+        return bool;
     }
 
 //CLASES ABSTRACTAS
     public abstract void onVerClick(View v,int pos);
-    public abstract void numFavs(int favs);
-
+    public abstract void numFavs(int position);
+    public abstract void delete(int position);
 
 }

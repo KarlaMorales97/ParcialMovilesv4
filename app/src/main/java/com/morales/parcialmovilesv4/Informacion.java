@@ -27,6 +27,11 @@ public class Informacion implements Serializable{
     }
 
 
+
+    //CONSTRUCTOR CON ATRIBUTOS A MOSTRARSE
+    public Informacion(String nombre) {
+        this.nombre = nombre;
+    }
     //CONSTRUCTOR CON ATRIBUTOS A MOSTRARSE
     public Informacion(String nombre, String numero) {
         this.nombre = nombre;
